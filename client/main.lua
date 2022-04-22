@@ -37,7 +37,7 @@ local function CreateCellsBlip()
 	SetBlipAsShortRange(TimeBlip, true)
 	SetBlipColour(TimeBlip, 4)
 	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName("Time check")
+	AddTextComponentSubstringPlayerName(Lang:t('target.check_time'))
 	EndTextCommandSetBlipName(TimeBlip)
 
 	if ShopBlip ~= nil then
@@ -51,7 +51,7 @@ local function CreateCellsBlip()
 	SetBlipAsShortRange(ShopBlip, true)
 	SetBlipColour(ShopBlip, 0)
 	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName("Canteen")
+	AddTextComponentSubstringPlayerName(Lang:t('info.canteen'))
 	EndTextCommandSetBlipName(ShopBlip)
 end
 
@@ -138,7 +138,7 @@ end)
 RegisterNetEvent('prison:client:Enter', function(time)
 	QBCore.Functions.Notify( Lang:t("error.injail", {Time = time}), "error")
 
-	TriggerEvent("chatMessage", "SYSTEM", "warning", "Your property has been seized, you'll get everything back when your time is up..")
+	TriggerEvent("chatMessage", "SYSTEM", "warning", Lang:t('info.personal_stuff'))
 	DoScreenFadeOut(500)
 	while not IsScreenFadedOut() do
 		Wait(10)
@@ -168,7 +168,7 @@ RegisterNetEvent('prison:client:Leave', function()
 		jailTime = 0
 		TriggerServerEvent("prison:server:SetJailStatus", 0)
 		TriggerServerEvent("prison:server:GiveJailItems")
-		TriggerEvent("chatMessage", "SYSTEM", "warning", "you've received your property back..")
+		TriggerEvent("chatMessage", "SYSTEM", "warning", Lang:t('info.received_back'))
 		inJail = false
 		RemoveBlip(currentBlip)
 		RemoveBlip(CellsBlip)
@@ -195,7 +195,7 @@ RegisterNetEvent('prison:client:UnjailPerson', function()
 	if jailTime > 0 then
 		TriggerServerEvent("prison:server:SetJailStatus", 0)
 		TriggerServerEvent("prison:server:GiveJailItems")
-		TriggerEvent("chatMessage", "SYSTEM", "warning", "You got your property back..")
+		TriggerEvent("chatMessage", "SYSTEM", "warning", Lang:t('info.received_back'))
 		inJail = false
 		RemoveBlip(currentBlip)
 		RemoveBlip(CellsBlip)
@@ -218,7 +218,7 @@ end)
 
 RegisterNetEvent('prison:client:canteen',function()
 	local ShopItems = {}
-	ShopItems.label = "Prison Canteen"
+	ShopItems.label = Lang:t('info.canteen')
 	ShopItems.items = Config.CanteenItems
 	ShopItems.slots = #Config.CanteenItems
 	TriggerServerEvent("inventory:server:OpenInventory", "shop", "Canteenshop_"..math.random(1, 99), ShopItems)
@@ -252,7 +252,7 @@ freedom = BoxZone:Create(vector3(Config.Locations["freedom"].coords.x, Config.Lo
 })
 freedom:onPlayerInOut(function(isPointInside)
 	if isPointInside then
-		exports['qb-core']:DrawText('[E] Check Time', 'left')
+		exports['qb-core']:DrawText('[E] '..Lang:t('target.check_time'), 'left')
 		insidefreedom = true
 	else
 		insidefreedom = false
@@ -266,7 +266,7 @@ debugPoly = false,
 })
 canteen:onPlayerInOut(function(isPointInside)
 	if isPointInside then
-		exports['qb-core']:DrawText('[E] Open Canteen', 'left')
+		exports['qb-core']:DrawText('[E] '..Lang:t('info.canteen'), 'left')
 		insidecanteen = true
 	else
 		insidecanteen = false
@@ -282,7 +282,7 @@ local function interaction()
 					type = "client",
 					event = "prison:client:Leave",
 					icon = 'fas fa-clipboard',
-					label = 'Check time',
+					label = Lang:t('target.check_time'),
 				}
 				},
 				distance = 2.5,
@@ -293,7 +293,7 @@ local function interaction()
 					type = "client",
 					event = "prison:client:canteen",
 					icon = 'fas fa-clipboard',
-					label = 'Get Food',
+					label = Lang:t('target.get_food'),
 				}
 				},
 				distance = 2.5,

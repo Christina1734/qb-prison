@@ -42,7 +42,7 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
             if result then
                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                QBCore.Functions.Progressbar("hack_gate", "Electronic kit plug in..", math.random(5000, 10000), false, true, {
+                QBCore.Functions.Progressbar("hack_gate", Lang:t('info.insert_electronic'), math.random(5000, 10000), false, true, {
                     disableMovement = true,
                     disableCarMovement = true,
                     disableMouse = false,
@@ -69,7 +69,7 @@ end)
 RegisterNetEvent('prison:client:SetLockDown', function(isLockdown)
     securityLockdown = isLockdown
     if securityLockdown and inJail then
-        TriggerEvent("chatMessage", "HOSTAGE", "error", "Highest security level is active, stay with the cell blocks!")
+        TriggerEvent("chatMessage", "HOSTAGE", "error", Lang:t('info.high_security'))
     end
 end)
 
@@ -77,15 +77,15 @@ RegisterNetEvent('prison:client:PrisonBreakAlert', function()
     -- TriggerEvent("chatMessage", "ALERT", "error", "Attentie alle eenheden! Poging tot uitbraak in de gevangenis!")
     TriggerEvent('qb-policealerts:client:AddPoliceAlert', {
         timeOut = 10000,
-        alertTitle = "Prison outbreak",
+        alertTitle = Lang:t('alert.title'),
         details = {
             [1] = {
                 icon = '<i class="fas fa-lock"></i>',
-                detail = "Boilingbroke Penitentiary",
+                detail = Lang:t('alert.detail'),
             },
             [2] = {
                 icon = '<i class="fas fa-globe-europe"></i>',
-                detail = "Route 68",
+                detail = Lang:t('alert.detail2'),
             },
         },
         callSign = QBCore.Functions.GetPlayerData().metadata["callsign"],

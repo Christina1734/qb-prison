@@ -59,7 +59,7 @@ local function jobstart(currentJob, currentLocation)
                 type = "client",
                 event = "qb-prison:electrician:work",
                 icon = 'fas fa-swords-laser',
-                label = 'Do Electrician Work',
+                label = Lang:t('target.electrician_work'),
             }
             },
             distance = 2.5,
@@ -72,7 +72,7 @@ local function jobstart(currentJob, currentLocation)
             })
             electricityzone:onPlayerInOut(function(isPointInside)
                 if isPointInside then
-                    exports['qb-drawtext']:DrawText('[E] Electricity Work', 'left')
+                    exports['qb-drawtext']:DrawText('[E] '..Lang:t('target.electrician_work'), 'left')
                     if IsControlJustReleased(0, 38) then
                         TriggerEvent("qb-prison:electrician:work")
                         electricityzone:destroy()
@@ -90,7 +90,7 @@ end
 RegisterNetEvent('qb-prison:electrician:work')
 AddEventHandler('qb-prison:electrician:work', function()
     isWorking = true
-    QBCore.Functions.Progressbar("work_electric", "Working on electricity..", math.random(5000, 10000), false, true, {
+    QBCore.Functions.Progressbar("work_electric", Lang:t('info.work_electric'), math.random(5000, 10000), false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
